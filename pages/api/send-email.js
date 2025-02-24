@@ -1,7 +1,18 @@
 import nodemailer from 'nodemailer';
 
+function formatOrderDetails(order) {
+  if (!order || order.length === 0) return 'Keine Bestelldetails verfügbar.';
+  return order.map(item => {
+    return `Product ID: ${item.productId}\nSelections:\n${item.selections.map(selection => `  - Size: ${selection.size}, Quantity: ${selection.quantity}, Initials: ${selection.initials}`).join('\n')}`;
+  }).join('\n\n');
+}
+
 export default async function handler(req, res) {
-  const { selections } = req.body;
+  const { order } = req.body;
+
+  if (!order || order.length === 0) {
+    return res.status(400).json({ success: false, error: 'Keine Bestelldetails verfügbar.' });
+  }
 
   // Konfigurieren Sie den SMTP-Transporter
   const transporter = nodemailer.createTransport({
@@ -13,11 +24,13 @@ export default async function handler(req, res) {
   });
 
   // Erstellen Sie die E-Mail-Inhalte
+  const orderDetails = formatOrderDetails(order);
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER, // Sie können hier auch eine andere E-Mail-Adresse angeben
     subject: 'Neue Produktbestellung',
-    text: `Bestelldetails:\n\n${JSON.stringify(selections, null, 2)}`,
+    text: `Bestelldetails:\n\n${orderDetails}`,
   };
 
   try {

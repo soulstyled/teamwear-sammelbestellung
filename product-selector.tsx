@@ -44,17 +44,38 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
     }
   }
 
-  const handleChange = (e) => {
+  interface FormData {
+    name: string;
+    email: string;
+    message: string;
+  }
+
+  interface HandleChangeEvent {
+    target: {
+      name: string;
+      value: string;
+    };
+  }
+
+  const handleChange = (e: HandleChangeEvent) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData((prevData: FormData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  interface HandleSubmitEvent {
+    preventDefault: () => void;
+  }
+
+  interface FetchResponse {
+    ok: boolean;
+  }
+
+  const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
     e.preventDefault();
-    const response = await fetch('/api/send-email', {
+    const response: FetchResponse = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -139,7 +160,7 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
                   variant="ghost"
                   size="icon"
                   onClick={() => removeSelection(selection.id)}
-                  aria-label="Remove selection"
+                  aria-label="Auswahl entfernen"
                 >
                   <X className="h-4 w-4" />
                 </Button>

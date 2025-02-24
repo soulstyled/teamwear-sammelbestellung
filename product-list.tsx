@@ -61,7 +61,7 @@ export default function ProductList({ products }: ProductListProps) {
       ))}
       <form onSubmit={handleSubmit}>
         <button type="submit" className="bg-royalblue text-white py-2 px-4 rounded">
-          Senden
+          Bestellung abschicken
         </button>
       </form>
     </div>
