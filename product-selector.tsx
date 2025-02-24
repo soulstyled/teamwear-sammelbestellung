@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
@@ -17,16 +17,22 @@ interface Selection {
 
 interface ProductSelectorProps {
   product: ProductInfo
+  updateSelection: (id: number, field: keyof Selection, value: string | number) => void
 }
 
-export default function ProductSelector({ product }: ProductSelectorProps) {
+export default function ProductSelector({ product, updateSelection }: ProductSelectorProps) {
   const [selections, setSelections] = useState<Selection[]>([{ id: 0, size: "", quantity: "", initials: "" }])
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
 
   const addNewRow = () => {
     setSelections([...selections, { id: selections.length, size: "", quantity: "", initials: "" }])
   }
 
-  const updateSelection = (id: number, field: keyof Selection, value: string) => {
+  const updateSelectionState = (id: number, field: keyof Selection, value: string | number) => {
     setSelections(selections.map((selection) => (selection.id === id ? { ...selection, [field]: value } : selection)))
   }
 
@@ -38,10 +44,35 @@ export default function ProductSelector({ product }: ProductSelectorProps) {
     }
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      alert('E-Mail erfolgreich gesendet!');
+    } else {
+      alert('Fehler beim Senden der E-Mail.');
+    }
+  };
+
   return (
     <div className="max-w-3xl p-6">
       <div className="grid gap-6 md:grid-cols-[200px,1fr]">
-        <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
+        <div className="relative aspect-square overflow-hidden rounded-lg">
           <Image src={product.imageUrl || "/placeholder.svg"} alt={product.imageAlt} className="object-cover" fill />
         </div>
         <div className="space-y-4">
@@ -65,7 +96,7 @@ export default function ProductSelector({ product }: ProductSelectorProps) {
 
           {selections.map((selection, index) => (
             <div key={selection.id} className="grid gap-4 sm:grid-cols-4 items-center">
-              <Select value={selection.size} onValueChange={(value) => updateSelection(selection.id, "size", value)}>
+              <Select value={selection.size} onValueChange={(value) => updateSelectionState(selection.id, "size", value)}>
                 <SelectTrigger aria-label="Größe auswählen">
                   <SelectValue placeholder="Größe" />
                 </SelectTrigger>
@@ -81,7 +112,7 @@ export default function ProductSelector({ product }: ProductSelectorProps) {
               <Select
                 disabled={!selection.size}
                 value={selection.quantity}
-                onValueChange={(value) => updateSelection(selection.id, "quantity", value)}
+                onValueChange={(value) => updateSelectionState(selection.id, "quantity", value)}
               >
                 <SelectTrigger aria-label="Menge auswählen">
                   <SelectValue placeholder="Menge" />
@@ -100,7 +131,7 @@ export default function ProductSelector({ product }: ProductSelectorProps) {
                 aria-label="Initialen / Nummer eingeben"
                 disabled={!selection.size}
                 value={selection.initials}
-                onChange={(e) => updateSelection(selection.id, "initials", e.target.value)}
+                onChange={(e) => updateSelectionState(selection.id, "initials", e.target.value)}
               />
 
               {(index > 0 || selection.size) && (
@@ -119,7 +150,7 @@ export default function ProductSelector({ product }: ProductSelectorProps) {
           {selections[selections.length - 1].size && (
             <Button onClick={addNewRow} variant="outline" className="mt-4">
               <PlusCircle className="mr-2 h-4 w-4" />
-              Add Another Size
+              Weitere Größe hinzufügen
             </Button>
           )}
         </div>

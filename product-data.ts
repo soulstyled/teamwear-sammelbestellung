@@ -29,6 +29,26 @@ export const products: ProductInfo[] = [
     priceAdults: 31.97,
     sizes: ["116", "128", "140", "152", "164", "176", "S", "M", "L", "XL"],
   },
+  {
+    id: "fantasy-jacket",
+    imageUrl:
+      "https://example.com/fantasy-jacket.png",
+    imageAlt: "Fantasy Jacket in red",
+    name: "Fantasy Jacket",
+    priceChildren: 35.47,
+    priceAdults: 41.97,
+    sizes: ["116", "128", "140", "152", "164", "176", "S", "M", "L", "XL"],
+  },
+  {
+    id: "mystic-hoodie",
+    imageUrl:
+      "https://example.com/mystic-hoodie.png",
+    imageAlt: "Mystic Hoodie in green",
+    name: "Mystic Hoodie",
+    priceChildren: 35.47,
+    priceAdults: 41.97,
+    sizes: ["116", "128", "140", "152", "164", "176", "S", "M", "L", "XL"],
+  },
   // Hier können weitere Produkte hinzugefügt werden
 ]
 
