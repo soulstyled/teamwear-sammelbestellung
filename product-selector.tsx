@@ -148,7 +148,7 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
               </Select>
 
               <Input
-                placeholder="MG10"
+                placeholder="Initialen"
                 aria-label="Initialen / Nummer eingeben"
                 disabled={!selection.size}
                 value={selection.initials}
