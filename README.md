@@ -20,7 +20,6 @@ ToDo:
 
 - Passwort-Schutz
 - Debugging absenden der Bestellung
-- Ausformulierung Hinweise
 - Hinzufügen aller Produktdaten
 - CSS Mobile 
 - Reset des Formulars mit nach erfolgreicher Absendung

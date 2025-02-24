@@ -10,16 +10,6 @@ export interface ProductInfo {
 
 export const products: ProductInfo[] = [
   {
-    id: "tiro24-windbreaker",
-    imageUrl:
-      "https://www.11teamsports.com/cdn-cgi/image/format=auto,width=250/media/98/05/a4/1730290968/adidas-jugend-tiro-24-windbreaker-kids-blau-weiss-260842980f7a4c13ab734bb2d8d803f7-front.png",
-    imageAlt: "Adidas Tiro 24 Windbreaker in blue",
-    name: "adidas Tiro 24 Windbreaker",
-    priceChildren: 35.47,
-    priceAdults: 41.97,
-    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL"],
-  },
-   {
     id: "tiro24-shirt",
     imageUrl:
       "https://www.11teamsports.com/cdn-cgi/image/format=auto,width=250/media/76/f5/1d/1730291017/adidas-jugend-tiro-24-trikot-kids-blau-weiss-fda5593d60254d458f0107cba87c5115-front.png",
@@ -27,7 +17,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Shirt",
     priceChildren: 18.97,
     priceAdults: 21.72,
-    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL"],
   },
   {
     id: "tiro24-trainingstop",
@@ -37,7 +27,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Trainingstop",
     priceChildren: 30.97,
     priceAdults: 35.47,
-    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL"],
   },
   {
     id: "tiro24-trainingsjacke",
@@ -47,7 +37,17 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Trainingsjacke",
     priceChildren: 29.97,
     priceAdults: 35.47,
-    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL"],
+    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
+  },
+  {
+    id: "tiro24-windbreaker",
+    imageUrl:
+      "https://www.11teamsports.com/cdn-cgi/image/format=auto,width=250/media/98/05/a4/1730290968/adidas-jugend-tiro-24-windbreaker-kids-blau-weiss-260842980f7a4c13ab734bb2d8d803f7-front.png",
+    imageAlt: "Adidas Tiro 24 Windbreaker in blue",
+    name: "adidas Tiro 24 Windbreaker",
+    priceChildren: 35.47,
+    priceAdults: 41.97,
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL"],
   },
   // Hier können weitere Produkte hinzugefügt werden
 ]
