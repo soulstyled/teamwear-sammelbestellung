@@ -147,15 +147,16 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
                 </SelectContent>
               </Select>
 
-              <Input
+                <Input
                 placeholder="Initialen"
                 aria-label="Initialen / Nummer eingeben"
                 disabled={!selection.size}
                 value={selection.initials}
+                maxLength={4}
                 onChange={(e) => updateSelectionState(selection.id, "initials", e.target.value)}
-              />
+                />
 
-              {(index > 0 || selection.size) && (
+                {(index > 0 || selection.size) && (
                 <Button
                   variant="ghost"
                   size="icon"

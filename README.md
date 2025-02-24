@@ -27,4 +27,3 @@ ToDo:
 - Preis-Kalkulation
 - E-Mail Kunde für Bestellbestätigung
 - Deployment auf vercel
-- Initialien Feld auf 4 Zeichen begrenzen
