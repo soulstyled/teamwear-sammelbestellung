@@ -101,11 +101,11 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
             <h1 className="text-2xl font-semibold tracking-tight">{product.name}</h1>
             <div className="mt-2 space-y-1 text-sm">
               <p>
-                <span className="font-medium">Kinder</span> (Gr. 116 bis 176):{" "}
+                <span className="font-medium">Kinder</span> (Größe 116 bis 176):{" "}
                 <span className="font-medium">{product.priceChildren.toFixed(2)} €</span>
               </p>
               <p>
-                <span className="font-medium">Erwachsene</span> (Gr. XS bis XXL):{" "}
+                <span className="font-medium">Erwachsene</span> (Größe XS bis XXL):{" "}
                 <span className="font-medium">{product.priceAdults.toFixed(2)} €</span>
               </p>
               <p>
