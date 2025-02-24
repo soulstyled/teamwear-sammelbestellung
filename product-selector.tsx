@@ -94,7 +94,7 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
     <div className="max-w-3xl p-6">
       <div className="grid gap-6 md:grid-cols-[200px,1fr]">
         <div className="relative aspect-square overflow-hidden rounded-lg">
-          <Image src={product.imageUrl || "/placeholder.svg"} alt={product.imageAlt} className="object-cover" fill />
+          <Image src={product.imageUrl || "/placeholder.svg"} alt={product.imageAlt} className="object-contain" fill />
         </div>
         <div className="space-y-4">
           <div>

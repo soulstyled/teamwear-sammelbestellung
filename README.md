@@ -23,7 +23,6 @@ ToDo:
 - Ausformulierung Hinweise
 - Hinzufügen aller Produktdaten
 - CSS Mobile 
-- Bilder nicht mehr abgeschnitten
 - Reset des Formulars mit nach erfolgreicher Absendung
 - Preis-Kalkulation
 - E-Mail Kunde für Bestellbestätigung
