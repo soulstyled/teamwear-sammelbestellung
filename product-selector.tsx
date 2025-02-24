@@ -91,9 +91,9 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
   };
 
   return (
-    <div className="max-w-3xl p-6">
+    <div className="max-w-3xl md:p-6 pb-12">
       <div className="grid gap-6 md:grid-cols-[200px,1fr]">
-        <div className="relative aspect-square overflow-hidden rounded-lg">
+        <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
           <Image src={product.imageUrl || "/placeholder.svg"} alt={product.imageAlt} className="object-contain" fill />
         </div>
         <div className="space-y-4">
@@ -116,7 +116,7 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
           </div>
 
           {selections.map((selection, index) => (
-            <div key={selection.id} className="grid gap-4 sm:grid-cols-4 items-center">
+            <div key={selection.id} className="grid gap-4 grid-cols-[1fr,1fr,1fr,40px] items-center">
               <Select value={selection.size} onValueChange={(value) => updateSelectionState(selection.id, "size", value)}>
                 <SelectTrigger aria-label="Größe auswählen">
                   <SelectValue placeholder="Größe" />

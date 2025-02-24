@@ -21,8 +21,9 @@ ToDo:
 - Passwort-Schutz
 - Debugging absenden der Bestellung
 - Hinzufügen aller Produktdaten
-- CSS Mobile 
+- Persönliche Daten abfragen
 - Reset des Formulars mit nach erfolgreicher Absendung
-- Preis-Kalkulation
-- E-Mail Kunde für Bestellbestätigung
 - Deployment auf vercel
+- E-Mail Kunde für Bestellbestätigung
+- Preis-Kalkulation
+- Preise mit Komma
