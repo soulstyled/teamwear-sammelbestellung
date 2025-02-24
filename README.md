@@ -27,3 +27,4 @@ ToDo:
 - Reset des Formulars mit nach erfolgreicher Absendung
 - Preis-Kalkulation
 - E-Mail Kunde für Bestellbestätigung
+- Deployment auf vercel
