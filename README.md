@@ -18,12 +18,12 @@ npm run start
 
 ToDo: 
 
-- Passwort-Schutz
 - Debugging absenden der Bestellung
 - Hinzufügen aller Produktdaten
 - Persönliche Daten abfragen
 - Reset des Formulars mit nach erfolgreicher Absendung
-- Deployment auf vercel
+- Mail Environment-Variablen auf Prod zu Vercel packen
 - E-Mail Kunde für Bestellbestätigung
 - Preis-Kalkulation
 - Preise mit Komma
+- Automatisches Deployment bei neuem Merge
