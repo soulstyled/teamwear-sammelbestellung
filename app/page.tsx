@@ -1,7 +1,42 @@
+"use client";
+
 import ProductList from "../product-list"
 import { products } from "../product-data"
+import { useState } from 'react';
 
 export default function Home() {
+  const [selections, setSelections] = useState<Selection[]>([]);
+
+  interface Selection {
+    id: number;
+    [key: string]: any;
+  }
+
+  const updateSelection = (id: number, field: string, value: any) => {
+    setSelections((prevSelections: Selection[]) =>
+      prevSelections.map((selection: Selection) =>
+        selection.id === id ? { ...selection, [field]: value } : selection
+      )
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response: Response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ selections }),
+    });
+
+    if (response.ok) {
+      alert('E-Mail erfolgreich gesendet!');
+    } else {
+      alert('Fehler beim Senden der E-Mail.');
+    }
+  };
+
   return (
     <main className="container mx-auto p-6 max-w-screen-md">
       <h1 className="text-3xl font-semibold mb-6">TuS Feuchtwangen Teamwear Sammelbestellung</h1>
@@ -14,7 +49,13 @@ export default function Home() {
       </ul>
   <p className="mb-5">Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
       <hr className="pb-12"/>
-      <ProductList products={products}/>
+        <ProductList products={products} updateSelection={updateSelection}/>
+      <hr className="pt-12 pb-12"/>
+      <form onSubmit={handleSubmit}>
+        <button type="submit" className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded">
+          Bestellung abschicken
+        </button>
+      </form>
     </main>
   )
 }

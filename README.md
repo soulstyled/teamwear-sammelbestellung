@@ -23,6 +23,7 @@ ToDo:
 - Persönliche Daten abfragen
 - Reset des Formulars mit nach erfolgreicher Absendung
 - Mail Environment-Variablen auf Prod zu Vercel packen
+- URL auf Vercel ändern in "tus-teamwearbestellung.vercel-app"
 - E-Mail Kunde für Bestellbestätigung
 - Preis-Kalkulation
 - Preise mit Komma

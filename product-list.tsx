@@ -15,23 +15,16 @@ interface Product {
 
 interface ProductListProps {
   products: Product[];
+  updateSelection: (id: number, field: string, value: any) => void;
 }
 
-export default function ProductList({ products }: ProductListProps) {
+export default function ProductList({ products, updateSelection }: ProductListProps) {
   const [selections, setSelections] = useState<Selection[]>([]);
 
   interface Selection {
     id: number;
     [key: string]: any;
   }
-
-  const updateSelection = (id: number, field: string, value: any) => {
-    setSelections((prevSelections: Selection[]) =>
-      prevSelections.map((selection: Selection) =>
-        selection.id === id ? { ...selection, [field]: value } : selection
-      )
-    );
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,11 +52,6 @@ export default function ProductList({ products }: ProductListProps) {
           updateSelection={updateSelection}
         />
       ))}
-      <form onSubmit={handleSubmit}>
-        <button type="submit" className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded">
-          Bestellung abschicken
-        </button>
-      </form>
     </div>
   );
 }
