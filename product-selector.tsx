@@ -98,7 +98,7 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
         </div>
         <div className="space-y-4">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">{product.name}</h1>
+            <h2 className="text-xl font-semibold tracking-tight">{product.name}</h2>
             <div className="mt-2 space-y-1 text-sm">
               <p>
                 <span className="font-medium">Kinder</span> (Größe 116 bis 176):{" "}

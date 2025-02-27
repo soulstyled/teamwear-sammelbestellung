@@ -3,6 +3,8 @@
 import ProductList from "../product-list"
 import { products } from "../product-data"
 import { useState } from 'react';
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function Home() {
   const [selections, setSelections] = useState<Selection[]>([]);
@@ -39,7 +41,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-6 max-w-screen-md">
-      <h1 className="text-3xl font-semibold mb-6">TuS Feuchtwangen Teamwear Sammelbestellung</h1>
+      <h1 className="text-3xl font-semibold mb-6">TuS Feuchtwangen Teamwear</h1>
       <ul className="mb-5 list-disc pl-8">
         <li><span className="font-medium">Lieferzeit</span>: je nach Verfügbarkeit ca. 2-3 Wochen</li>
         <li><span className="font-medium">Personalisierung</span>: Initialen und Nummer möglich, maximal 4 Zeichen. Aufpreis: 3,00 €</li>
@@ -50,9 +52,35 @@ export default function Home() {
   <p className="mb-5">Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
       <hr className="pb-12"/>
         <ProductList products={products} updateSelection={updateSelection}/>
-      <hr className="pt-12 pb-12"/>
+      <hr className="pt-12 pb-8"/>
       <form onSubmit={handleSubmit}>
-        <button type="submit" className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded">
+      <h2 className="text-xl font-semibold tracking-tight">Bestellung abschließen</h2>
+        <Input
+          placeholder="Name des Spielers"
+          aria-label="Name des Spielers"
+        />
+         <Select>
+                <SelectTrigger aria-label="Mannschaft">
+                  <SelectValue placeholder="Mannschaft" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="G-Jugend">G-Jugend</SelectItem>
+                  <SelectItem value="F-Jugend">F-Jugend</SelectItem>
+                  <SelectItem value="E-Jugend">E-Jugend</SelectItem>
+                  <SelectItem value="D-Jugend">D-Jugend</SelectItem>
+                  <SelectItem value="C-Jugend">C-Jugend</SelectItem>
+                  <SelectItem value="B-Jugend">B-Jugend</SelectItem>
+                  <SelectItem value="A-Jugend">A-Jugend</SelectItem>
+                  <SelectItem value="Herren">Herren</SelectItem>
+                  <SelectItem value="Trainerteam">Trainer</SelectItem>
+                </SelectContent>
+              </Select>
+        <Input
+          placeholder="E-Mail / Telefonnummer für Rückfragen"
+          aria-label="E-Mail / Telefonnummer für Rückfragen"
+        />
+        
+        <button type="submit" className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-8">
           Bestellung abschicken
         </button>
       </form>
