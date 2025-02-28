@@ -17,10 +17,9 @@ npm run start
 ```
 
 ToDo: 
-
+- Persönliche Daten abfragen
 - Debugging absenden der Bestellung
 - Hinzufügen aller Produktdaten
-- Persönliche Daten abfragen
 - Reset des Formulars mit nach erfolgreicher Absendung
 - Mail Environment-Variablen auf Prod zu Vercel packen
 - URL auf Vercel ändern in "tus-teamwearbestellung.vercel-app"
