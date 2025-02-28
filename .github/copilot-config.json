@@ -1,0 +1,46 @@
+{
+  "project": {
+    "name": "Teamwear Sammelbestellung",
+    "type": "next.js",
+    "description": "Eine Next.js-Anwendung zur Verwaltung von Teamwear-Bestellungen für Sportvereine"
+  },
+  "technologies": {
+    "framework": "next.js",
+    "version": "latest",
+    "uiLibrary": "shadcn/ui",
+    "styling": "tailwindcss",
+    "language": "typescript"
+  },
+  "design": {
+    "colors": {
+      "primary": "#2563eb",
+      "secondary": "#4ade80",
+      "background": "#ffffff",
+      "text": "#111827"
+    },
+    "fonts": {
+      "main": "Poppins",
+      "fallback": "sans-serif"
+    },
+    "responsive": true
+  },
+  "preferences": {
+    "language": "de",
+    "commentLanguage": "de",
+    "codeStyle": "clean",
+    "complexity": "low-to-medium",
+    "indentation": "spaces",
+    "indentSize": 2
+  },
+  "features": [
+    "product-display",
+    "product-selection",
+    "form-submission",
+    "email-integration"
+  ],
+  "deployment": {
+    "platform": "vercel",
+    "plan": "hobby",
+    "region": "eu"
+  }
+}
