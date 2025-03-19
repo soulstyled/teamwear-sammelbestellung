@@ -7,7 +7,6 @@ export interface ProductInfo {
   priceAdults: number
   sizes: string[]
 }
-
 export const products: ProductInfo[] = [
   {
     id: "tiro24-shirt",
@@ -51,4 +50,3 @@ export const products: ProductInfo[] = [
   },
   // Hier können weitere Produkte hinzugefügt werden
 ]
-

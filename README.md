@@ -1,4 +1,4 @@
-# teamwear-sammelbestellung
+# tus-teamwearbestellung
 
 ## Installation
 
@@ -16,13 +16,15 @@ To start the application, use the following command:
 npm run start
 ```
 
-ToDo: 
+## Deployment
+Deployed on Vercel: tus-teamwearbestellung.vercel.app
+
+## ToDo: 
 - Persönliche Daten abfragen
 - Debugging absenden der Bestellung
 - Hinzufügen aller Produktdaten
 - Reset des Formulars mit nach erfolgreicher Absendung
 - Mail Environment-Variablen auf Prod zu Vercel packen
-- URL auf Vercel ändern in "tus-teamwearbestellung.vercel-app"
+- Auth-Settings in Environment-Variablen packen
 - E-Mail Kunde für Bestellbestätigung
 - Preis-Kalkulation
-- Automatisches Deployment bei neuem Merge

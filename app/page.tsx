@@ -1,7 +1,6 @@
 "use client";
-
-import ProductList from "../product-list"
-import { products } from "../product-data"
+import ProductList from "./components/product-list"
+import { products } from "./product-data"
 import { useState } from 'react';
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"

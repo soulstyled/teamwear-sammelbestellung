@@ -1,25 +1,21 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { PlusCircle, X } from "lucide-react"
-import type { ProductInfo } from "./product-data"
-
+import type { ProductInfo } from "../product-data"
 interface Selection {
   id: number
   size: string
   quantity: string
   initials: string
 }
-
 interface ProductSelectorProps {
   product: ProductInfo
   updateSelection: (id: number, field: keyof Selection, value: string | number) => void
 }
-
 export default function ProductSelector({ product, updateSelection }: ProductSelectorProps) {
   const [selections, setSelections] = useState<Selection[]>([{ id: 0, size: "", quantity: "", initials: "" }])
   const [formData, setFormData] = useState({
@@ -27,15 +23,12 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
     email: '',
     message: '',
   });
-
   const addNewRow = () => {
     setSelections([...selections, { id: selections.length, size: "", quantity: "", initials: "" }])
   }
-
   const updateSelectionState = (id: number, field: keyof Selection, value: string | number) => {
     setSelections(selections.map((selection) => (selection.id === id ? { ...selection, [field]: value } : selection)))
   }
-
   const removeSelection = (id: number) => {
     if (selections.length > 1) {
       setSelections(selections.filter((selection) => selection.id !== id))
@@ -43,20 +36,17 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
       setSelections([{ id: 0, size: "", quantity: "", initials: "" }])
     }
   }
-
   interface FormData {
     name: string;
     email: string;
     message: string;
   }
-
   interface HandleChangeEvent {
     target: {
       name: string;
       value: string;
     };
   }
-
   const handleChange = (e: HandleChangeEvent) => {
     const { name, value } = e.target;
     setFormData((prevData: FormData) => ({
@@ -64,15 +54,12 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
       [name]: value,
     }));
   };
-
   interface HandleSubmitEvent {
     preventDefault: () => void;
   }
-
   interface FetchResponse {
     ok: boolean;
   }
-
   const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
     e.preventDefault();
     const response: FetchResponse = await fetch('/api/send-email', {
@@ -82,14 +69,12 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
       },
       body: JSON.stringify(formData),
     });
-
     if (response.ok) {
       alert('E-Mail erfolgreich gesendet!');
     } else {
       alert('Fehler beim Senden der E-Mail.');
     }
   };
-
   return (
     <div className="max-w-3xl md:p-6 pb-12">
       <div className="grid gap-6 md:grid-cols-[200px,1fr]">
@@ -114,7 +99,6 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
               </p>
             </div>
           </div>
-
           {selections.map((selection, index) => (
             <div key={selection.id} className="grid gap-4 grid-cols-[1fr,1fr,1fr,40px] items-center">
               <Select value={selection.size} onValueChange={(value) => updateSelectionState(selection.id, "size", value)}>
@@ -129,7 +113,6 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
                   ))}
                 </SelectContent>
               </Select>
-
               <Select
                 disabled={!selection.size}
                 value={selection.quantity}
@@ -146,7 +129,6 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
                   <SelectItem value="5">5</SelectItem>
                 </SelectContent>
               </Select>
-
                 <Input
                 placeholder="Initialen"
                 aria-label="Initialen / Nummer eingeben"
@@ -155,7 +137,6 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
                 maxLength={4}
                 onChange={(e) => updateSelectionState(selection.id, "initials", e.target.value)}
                 />
-
                 {(index > 0 || selection.size) && (
                 <Button
                   variant="ghost"
@@ -168,7 +149,6 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
               )}
             </div>
           ))}
-
           {selections[selections.length - 1].size && (
             <Button onClick={addNewRow} variant="outline" className="mt-4">
               <PlusCircle className="mr-2 h-4 w-4" />
@@ -180,4 +160,3 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
     </div>
   )
 }
-
