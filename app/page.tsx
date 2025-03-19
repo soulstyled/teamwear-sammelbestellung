@@ -13,6 +13,7 @@ export default function Home() {
     team: '',
     contact: ''
   });
+  const [showTooltip, setShowTooltip] = useState(false);
 
   interface ProductSelection {
     productId: string;
@@ -153,13 +154,15 @@ export default function Home() {
         </div>
         
         <TooltipProvider>
-          <Tooltip>
+          <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
             <TooltipTrigger asChild>
               <div>
                 <button 
                   type="submit" 
                   className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-8 cursor-pointer disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed"
                   disabled={!selections.some(item => item.selections && item.selections.length > 0) || !customerData.name || !customerData.contact}
+                  onTouchStart={() => setShowTooltip(true)}
+                  onTouchEnd={() => setShowTooltip(false)}
                 >
                   Bestellung abschicken
                 </button>
