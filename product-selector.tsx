@@ -110,7 +110,7 @@ export default function ProductSelector({ product, updateSelection }: ProductSel
               </p>
               <p>
                 <span className="font-medium">Initialen / Nummer</span> (optional):{" "}
-                <span className="font-medium">3,00 €</span>
+                <span className="font-medium">3.00 €</span>
               </p>
             </div>
           </div>

@@ -25,5 +25,4 @@ ToDo:
 - URL auf Vercel ändern in "tus-teamwearbestellung.vercel-app"
 - E-Mail Kunde für Bestellbestätigung
 - Preis-Kalkulation
-- Preise mit Komma
 - Automatisches Deployment bei neuem Merge
