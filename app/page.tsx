@@ -51,38 +51,49 @@ export default function Home() {
   <p className="mb-5">Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
       <hr className="pb-12"/>
         <ProductList products={products} updateSelection={updateSelection}/>
-      <hr className="pt-12 pb-8"/>
+      <hr className="pt-12 pb-6"/>
       <form onSubmit={handleSubmit}>
-      <h2 className="text-xl font-semibold tracking-tight">Bestellung abschließen</h2>
-        <Input
-          placeholder="Name des Spielers"
-          aria-label="Name des Spielers"
-        />
-         <Select>
-                <SelectTrigger aria-label="Mannschaft">
-                  <SelectValue placeholder="Mannschaft" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="G-Jugend">G-Jugend</SelectItem>
-                  <SelectItem value="F-Jugend">F-Jugend</SelectItem>
-                  <SelectItem value="E-Jugend">E-Jugend</SelectItem>
-                  <SelectItem value="D-Jugend">D-Jugend</SelectItem>
-                  <SelectItem value="C-Jugend">C-Jugend</SelectItem>
-                  <SelectItem value="B-Jugend">B-Jugend</SelectItem>
-                  <SelectItem value="A-Jugend">A-Jugend</SelectItem>
-                  <SelectItem value="Herren">Herren</SelectItem>
-                  <SelectItem value="Trainerteam">Trainer</SelectItem>
-                </SelectContent>
-              </Select>
-        <Input
-          placeholder="E-Mail / Telefonnummer für Rückfragen"
-          aria-label="E-Mail / Telefonnummer für Rückfragen"
-        />
+        <h2 className="text-xl font-semibold tracking-tight mb-4">Bestellung abschließen</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <div className="lg:col-span-4">
+            <Input
+              placeholder="Name des Spielers"
+              aria-label="Name des Spielers"
+              className="w-full"
+            />
+          </div>
+          <div className="lg:col-span-3">
+            <Select>
+              <SelectTrigger aria-label="Mannschaft" className="w-full">
+                <SelectValue placeholder="Mannschaft" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="G-Jugend">G-Jugend</SelectItem>
+                <SelectItem value="F-Jugend">F-Jugend</SelectItem>
+                <SelectItem value="E-Jugend">E-Jugend</SelectItem>
+                <SelectItem value="D-Jugend">D-Jugend</SelectItem>
+                <SelectItem value="C-Jugend">C-Jugend</SelectItem>
+                <SelectItem value="B-Jugend">B-Jugend</SelectItem>
+                <SelectItem value="A-Jugend">A-Jugend</SelectItem>
+                <SelectItem value="Herren">Herren</SelectItem>
+                <SelectItem value="Trainerteam">Trainer</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="lg:col-span-4">
+            <Input
+              placeholder="E-Mail / Telefon für Rückfragen"
+              aria-label="E-Mail / Telefon für Rückfragen"
+              className="w-full"
+            />
+          </div>
+        </div>
         
         <button type="submit" className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-8">
           Bestellung abschicken
         </button>
       </form>
+      <p className="text-sm pt-8">Bei Fragen bitte an Michael Geißler wenden (0178 / 3137341 oder geisslersmichi@gmail.com)</p>
     </main>
   )
 }
