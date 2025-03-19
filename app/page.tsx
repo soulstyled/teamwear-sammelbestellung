@@ -179,7 +179,7 @@ export default function Home() {
           </Tooltip>
         </TooltipProvider>
       </form>
-      <p className="text-sm pt-8">Bei Fragen bitte an Michael Geißler wenden (0178 / 3137341 oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
+      <p className="text-sm pt-6">Nach Abschluss deiner Bestellung, bekommst du eine Bestätigung per E-Mail oder WhatsApp. Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
     </main>
   )
 }
