@@ -20,10 +20,7 @@ npm run start
 Deployed on Vercel: tus-teamwearbestellung.vercel.app
 
 ## ToDo: 
-- Debugging absenden der Bestellung
 - Hinzufügen aller Produktdaten
-- Reset des Formulars mit nach erfolgreicher Absendung
 - Mail Environment-Variablen auf Prod zu Vercel packen
 - Auth-Settings in Environment-Variablen packen
-- E-Mail Kunde für Bestellbestätigung
 - Preis-Kalkulation

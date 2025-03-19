@@ -4,38 +4,93 @@ import { products } from "./product-data"
 import { useState } from 'react';
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function Home() {
-  const [selections, setSelections] = useState<Selection[]>([]);
+  const [selections, setSelections] = useState<ProductSelection[]>([]);
+  const [customerData, setCustomerData] = useState({
+    name: '',
+    team: '',
+    contact: ''
+  });
 
-  interface Selection {
-    id: number;
-    [key: string]: any;
+  interface ProductSelection {
+    productId: string;
+    selections: {
+      size: string;
+      quantity: string;
+      initials: string;
+    }[];
   }
 
-  const updateSelection = (id: number, field: string, value: any) => {
-    setSelections((prevSelections: Selection[]) =>
-      prevSelections.map((selection: Selection) =>
-        selection.id === id ? { ...selection, [field]: value } : selection
-      )
-    );
+  const updateSelection = (productId: string, selections: any[]) => {
+    setSelections((prevSelections) => {
+      // Finde existierenden Eintrag für das Produkt oder erstelle einen neuen
+      const existingIndex = prevSelections.findIndex(item => item.productId === productId);
+      
+      if (existingIndex >= 0) {
+        const updatedSelections = [...prevSelections];
+        updatedSelections[existingIndex] = { productId, selections };
+        return updatedSelections;
+      } else {
+        return [...prevSelections, { productId, selections }];
+      }
+    });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCustomerData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (value: string) => {
+    setCustomerData(prev => ({
+      ...prev,
+      team: value
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Bereite die Order-Daten für die API vor
+    const orderData = {
+      customer: customerData,
+      order: selections.filter(item => item.selections && item.selections.length > 0)
+    };
+
+    console.log("Sending order data:", orderData);
+
     const response: Response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ selections }),
+      body: JSON.stringify(orderData),
     });
-
+    
     if (response.ok) {
-      alert('E-Mail erfolgreich gesendet!');
+      // Erfolgsmeldung anzeigen und die Formularfelder zurücksetzen
+      alert('Deine Bestellung wurde erfolgreich gesendet!');
+      resetForm();
     } else {
-      alert('Fehler beim Senden der E-Mail.');
+      alert('Fehler beim Senden der Bestellung. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie uns direkt.');
     }
+  };
+
+  // Funktion zum Zurücksetzen aller Formulardaten
+  const resetForm = () => {
+    // Kundendaten zurücksetzen
+    setCustomerData({ name: '', team: '', contact: '' });
+    
+    // Produktauswahlen zurücksetzen
+    setSelections([]);
+    
+    // Event auslösen, um Produktauswahlen in Kind-Komponenten zurückzusetzen
+    window.dispatchEvent(new CustomEvent('resetProductSelections'));
   };
 
   return (
@@ -48,7 +103,7 @@ export default function Home() {
         <li><span className="font-medium">Lieferung</span>: die Übergabe der fertigen Klamotten erfolgt beim Training</li>
         <li><span className="font-medium">Retoure</span>: ausgeschlossen, da personalisierte Ware</li>
       </ul>
-  <p className="mb-5">Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
+      <p className="mb-5">Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
       <hr className="pb-12"/>
         <ProductList products={products} updateSelection={updateSelection}/>
       <hr className="pt-12 pb-6"/>
@@ -57,13 +112,17 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-4">
             <Input
+              name="name"
+              value={customerData.name}
+              onChange={handleInputChange}
               placeholder="Name des Spielers"
               aria-label="Name des Spielers"
               className="w-full"
+              required
             />
           </div>
           <div className="lg:col-span-3">
-            <Select>
+            <Select value={customerData.team} onValueChange={handleSelectChange}>
               <SelectTrigger aria-label="Mannschaft" className="w-full">
                 <SelectValue placeholder="Mannschaft" />
               </SelectTrigger>
@@ -82,18 +141,45 @@ export default function Home() {
           </div>
           <div className="lg:col-span-4">
             <Input
-              placeholder="E-Mail / Telefon für Rückfragen"
-              aria-label="E-Mail / Telefon für Rückfragen"
+              name="contact"
+              value={customerData.contact}
+              onChange={handleInputChange}
+              placeholder="E-Mail / Telefon"
+              aria-label="E-Mail / Telefon"
               className="w-full"
+              required
             />
           </div>
         </div>
         
-        <button type="submit" className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-8">
-          Bestellung abschicken
-        </button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <button 
+                  type="submit" 
+                  className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-8 cursor-pointer disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed"
+                  disabled={!selections.some(item => item.selections && item.selections.length > 0) || !customerData.name || !customerData.contact}
+                >
+                  Bestellung abschicken
+                </button>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              {!selections.some(item => item.selections && item.selections.length > 0) && 
+                <p>Bitte wähle mindestens ein Produkt aus</p>
+              }
+              {!customerData.name && 
+                <p>Bitte gib den Spieler-Namen ein</p>
+              }
+              {!customerData.contact && 
+                <p>Bitte gib eine Telefonnummer oder E-Mailadresse für Rückfragen an</p>
+              }
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </form>
-      <p className="text-sm pt-8">Bei Fragen bitte an Michael Geißler wenden (0178 / 3137341 oder geisslersmichi@gmail.com)</p>
+      <p className="text-sm pt-8">Bei Fragen bitte an Michael Geißler wenden (0178 / 3137341 oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
     </main>
   )
 }

@@ -6,75 +6,65 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { PlusCircle, X } from "lucide-react"
 import type { ProductInfo } from "../product-data"
+
 interface Selection {
   id: number
   size: string
   quantity: string
   initials: string
 }
+
 interface ProductSelectorProps {
   product: ProductInfo
-  updateSelection: (id: number, field: keyof Selection, value: string | number) => void
+  onSelectionChange: (selections: Selection[]) => void
 }
-export default function ProductSelector({ product, updateSelection }: ProductSelectorProps) {
+
+export default function ProductSelector({ product, onSelectionChange }: ProductSelectorProps) {
   const [selections, setSelections] = useState<Selection[]>([{ id: 0, size: "", quantity: "", initials: "" }])
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const addNewRow = () => {
-    setSelections([...selections, { id: selections.length, size: "", quantity: "", initials: "" }])
-  }
-  const updateSelectionState = (id: number, field: keyof Selection, value: string | number) => {
-    setSelections(selections.map((selection) => (selection.id === id ? { ...selection, [field]: value } : selection)))
-  }
-  const removeSelection = (id: number) => {
-    if (selections.length > 1) {
-      setSelections(selections.filter((selection) => selection.id !== id))
-    } else {
-      setSelections([{ id: 0, size: "", quantity: "", initials: "" }])
-    }
-  }
-  interface FormData {
-    name: string;
-    email: string;
-    message: string;
-  }
-  interface HandleChangeEvent {
-    target: {
-      name: string;
-      value: string;
+
+  // Event-Listener für das Zurücksetzen des Formulars
+  useEffect(() => {
+    const resetSelections = () => {
+      setSelections([{ id: 0, size: "", quantity: "", initials: "" }]);
     };
+
+    // Event-Listener registrieren
+    window.addEventListener('resetProductSelections', resetSelections);
+
+    // Event-Listener aufräumen beim Unmount
+    return () => {
+      window.removeEventListener('resetProductSelections', resetSelections);
+    };
+  }, []);
+  
+  const addNewRow = () => {
+    const newSelections = [...selections, { id: selections.length, size: "", quantity: "", initials: "" }];
+    setSelections(newSelections);
+    // Nur valide Selektionen an die übergeordnete Komponente weitergeben
+    onSelectionChange(newSelections.filter(sel => sel.size && sel.quantity));
   }
-  const handleChange = (e: HandleChangeEvent) => {
-    const { name, value } = e.target;
-    setFormData((prevData: FormData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  interface HandleSubmitEvent {
-    preventDefault: () => void;
+
+  const updateSelectionState = (id: number, field: keyof Selection, value: string | number) => {
+    const newSelections = selections.map((selection) => 
+      selection.id === id ? { ...selection, [field]: value } : selection
+    );
+    setSelections(newSelections);
+    // Nur valide Selektionen an die übergeordnete Komponente weitergeben
+    onSelectionChange(newSelections.filter(sel => sel.size && sel.quantity));
   }
-  interface FetchResponse {
-    ok: boolean;
-  }
-  const handleSubmit = async (e: HandleSubmitEvent): Promise<void> => {
-    e.preventDefault();
-    const response: FetchResponse = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    if (response.ok) {
-      alert('E-Mail erfolgreich gesendet!');
+
+  const removeSelection = (id: number) => {
+    let newSelections;
+    if (selections.length > 1) {
+      newSelections = selections.filter((selection) => selection.id !== id);
     } else {
-      alert('Fehler beim Senden der E-Mail.');
+      newSelections = [{ id: 0, size: "", quantity: "", initials: "" }];
     }
-  };
+    setSelections(newSelections);
+    // Nur valide Selektionen an die übergeordnete Komponente weitergeben
+    onSelectionChange(newSelections.filter(sel => sel.size && sel.quantity));
+  }
+
   return (
     <div className="max-w-3xl md:p-6 pb-12">
       <div className="grid gap-6 md:grid-cols-[200px,1fr]">
