@@ -39,11 +39,11 @@ export const products: ProductInfo[] = [
     sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
   },
   {
-    id: "tiro24-hoodie",
+    id: "tiro24-sweat-hoodie",
     imageUrl:
       "https://www.11teamsports.com/cdn-cgi/image/format=auto,width=350/media/9e/94/fc/1730291272/adidas-jugend-tiro-24-hoody-schwarz-weiss-97937ca8df714344b8351527d45f31ae-front.png",
-    imageAlt: "adidas Tiro 24 Hoodie schwarz",
-    name: "adidas Tiro 24 Hoodie",
+    imageAlt: "adidas Tiro 24 Sweat Hoodie schwarz",
+    name: "adidas Tiro 24 Sweat Hoodie",
     priceChildren: 32.00,
     priceAdults: 41.00,
     sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
