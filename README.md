@@ -21,6 +21,4 @@ Deployed on Vercel: tus-teamwearbestellung.vercel.app
 
 ## ToDo: 
 - Hinzufügen aller Produktdaten
-- Mail Environment-Variablen auf Prod zu Vercel packen
-- Auth-Settings in Environment-Variablen packen
 - Preis-Kalkulation

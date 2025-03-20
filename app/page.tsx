@@ -1,10 +1,9 @@
 "use client";
 import ProductList from "./components/product-list"
 import { products } from "./product-data"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function Home() {
   const [selections, setSelections] = useState<ProductSelection[]>([]);
@@ -13,7 +12,8 @@ export default function Home() {
     team: '',
     contact: ''
   });
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showErrors, setShowErrors] = useState(false);
+  const [countdown, setCountdown] = useState(5);
 
   interface ProductSelection {
     productId: string;
@@ -23,6 +23,30 @@ export default function Home() {
       initials: string;
     }[];
   }
+
+  // Countdown-Timer für die Fehlermeldung
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    if (showErrors) {
+      setCountdown(8);
+      
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setShowErrors(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [showErrors]);
 
   const updateSelection = (productId: string, selections: any[]) => {
     setSelections((prevSelections) => {
@@ -63,8 +87,6 @@ export default function Home() {
       order: selections.filter(item => item.selections && item.selections.length > 0)
     };
 
-    console.log("Sending order data:", orderData);
-
     const response: Response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
@@ -94,6 +116,18 @@ export default function Home() {
     window.dispatchEvent(new CustomEvent('resetProductSelections'));
   };
 
+  const handleButtonClick = (e: React.MouseEvent) => {
+    // Prüfen, ob die Bedingungen für eine gültige Formularübermittlung erfüllt sind
+    const isFormValid = selections.some(item => item.selections && item.selections.length > 0) 
+                        && !!customerData.name 
+                        && !!customerData.contact;
+    
+    if (!isFormValid) {
+      e.preventDefault();
+      setShowErrors(true);
+    }
+  };
+
   return (
     <main className="container mx-auto p-6 max-w-screen-md">
       <h1 className="text-3xl font-semibold mb-6">TuS Feuchtwangen Teamwear</h1>
@@ -118,7 +152,7 @@ export default function Home() {
               onChange={handleInputChange}
               placeholder="Name des Spielers"
               aria-label="Name des Spielers"
-              className="w-full"
+              className={`w-full ${showErrors && !customerData.name ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
               required
             />
           </div>
@@ -147,40 +181,46 @@ export default function Home() {
               onChange={handleInputChange}
               placeholder="E-Mail / Telefon"
               aria-label="E-Mail / Telefon"
-              className="w-full"
+              className={`w-full ${showErrors && !customerData.contact ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
               required
             />
           </div>
         </div>
         
-        <TooltipProvider>
-          <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
-            <TooltipTrigger asChild>
-              <div>
-                <button 
-                  type="submit" 
-                  className="bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-8 cursor-pointer disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed"
-                  disabled={!selections.some(item => item.selections && item.selections.length > 0) || !customerData.name || !customerData.contact}
-                  onTouchStart={() => setShowTooltip(true)}
-                  onTouchEnd={() => setShowTooltip(false)}
-                >
-                  Bestellung abschicken
-                </button>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              {!selections.some(item => item.selections && item.selections.length > 0) && 
-                <p>Bitte wähle mindestens ein Produkt aus</p>
-              }
-              {!customerData.name && 
-                <p>Bitte gib den Spieler-Namen ein</p>
-              }
-              {!customerData.contact && 
-                <p>Bitte gib eine Telefonnummer oder E-Mailadresse für Rückfragen an</p>
-              }
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        {showErrors && (
+          <div className="mt-4 p-3 bg-red-100 border border-red-300 text-red-600 rounded-md animate-in fade-in duration-300 relative overflow-hidden">
+            <div className="text-sm">
+              {!selections.some(item => item.selections && item.selections.length > 0) && (
+                <p>• Bitte wähle mindestens ein Produkt aus</p>
+              )}
+              {!customerData.name && (
+                <p>• Bitte gib den Spieler-Namen ein</p>
+              )}
+              {!customerData.contact && (
+                <p>• Bitte gib eine Telefonnummer oder E-Mailadresse für Rückfragen an</p>
+              )}
+            </div>
+            
+            {/* Countdown-Animation */}
+            <div className="absolute bottom-0 left-0 h-1 bg-red-400 transition-all duration-1000" 
+                 style={{ width: `${(countdown / 8) * 100}%` }}>
+            </div>
+            
+            {/* Countdown-Anzeige */}
+            <div className="absolute top-1 right-2 text-xs text-red-500 opacity-70">
+              {countdown}
+            </div>
+          </div>
+        )}
+        
+        <div className="mt-4" onClick={handleButtonClick}>
+          <button 
+            type="submit" 
+            className={`bg-royalblue hover:bg-blue-500 text-white py-2 px-4 rounded mt-4 cursor-pointer ${!selections.some(item => item.selections && item.selections.length > 0) || !customerData.name || !customerData.contact ? 'opacity-50 bg-gray-500 cursor-not-allowed' : ''}`}
+          >
+            Bestellung abschicken
+          </button>
+        </div>
       </form>
       <p className="text-sm pt-6">Nach Abschluss deiner Bestellung, bekommst du eine Bestätigung per E-Mail oder WhatsApp. Bei Fragen an Michael Geißler wenden (<a href="tel:+491783137341">0178 / 3137341</a> oder <a href="mailto:geisslersmichi@gmail.com">geisslersmichi@gmail.com</a>)</p>
     </main>
