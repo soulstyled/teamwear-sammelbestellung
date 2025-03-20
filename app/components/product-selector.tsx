@@ -75,14 +75,23 @@ export default function ProductSelector({ product, onSelectionChange }: ProductS
           <div>
             <h2 className="text-xl font-semibold tracking-tight">{product.name}</h2>
             <div className="mt-2 space-y-1 text-sm">
-              <p>
-                <span className="font-medium">Kinder</span> (Größe 116 bis 176):{" "}
-                <span className="font-medium">{product.priceChildren.toFixed(2)} €</span>
-              </p>
-              <p>
-                <span className="font-medium">Erwachsene</span> (Größe XS bis XXL):{" "}
-                <span className="font-medium">{product.priceAdults.toFixed(2)} €</span>
-              </p>
+              {product.hasUniformSizing ? (
+                <p>
+                  <span className="font-medium">Preis</span>:{" "}
+                  <span className="font-medium">{product.price?.toFixed(2)} €</span>
+                </p>
+              ) : (
+                <>
+                  <p>
+                    <span className="font-medium">Kinder</span> (Größe 116 bis 176):{" "}
+                    <span className="font-medium">{product.priceChildren?.toFixed(2)} €</span>
+                  </p>
+                  <p>
+                    <span className="font-medium">Erwachsene</span> (Größe XS bis XXL):{" "}
+                    <span className="font-medium">{product.priceAdults?.toFixed(2)} €</span>
+                  </p>
+                </>
+              )}
               <p>
                 <span className="font-medium">Initialen / Nummer</span> (optional):{" "}
                 <span className="font-medium">3.00 €</span>

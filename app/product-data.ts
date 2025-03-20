@@ -3,9 +3,11 @@ export interface ProductInfo {
   imageUrl: string
   imageAlt: string
   name: string
-  priceChildren: number
-  priceAdults: number
+  priceChildren?: number  // Optional für Produkte ohne Größenunterscheidung
+  priceAdults?: number    // Optional für Produkte ohne Größenunterscheidung
+  price?: number         // Einheitspreis für Produkte ohne Größenunterscheidung
   sizes: string[]
+  hasUniformSizing?: boolean // Kennzeichnet Produkte mit einheitlicher Größe
 }
 export const products: ProductInfo[] = [
   {
@@ -16,7 +18,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Shirt",
     priceChildren: 19.00,
     priceAdults: 22.00,
-    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "tiro24-trainingstop",
@@ -26,7 +28,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Trainingstop",
     priceChildren: 31.00,
     priceAdults: 36.00,
-    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "tiro24-trainingsjacke",
@@ -36,7 +38,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Trainingsjacke",
     priceChildren: 30.00,
     priceAdults: 36.00,
-    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "tiro24-sweat-hoodie",
@@ -46,7 +48,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Sweat Hoodie",
     priceChildren: 32.00,
     priceAdults: 41.00,
-    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "tiro24-short",
@@ -56,7 +58,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Trainingsshort",
     priceChildren: 15.00,
     priceAdults: 18.00,
-    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "tiro24-trainingshose",
@@ -66,7 +68,7 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Trainingshose",
     priceChildren: 26.00,
     priceAdults: 32.00,
-    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "team-base-top",
@@ -76,7 +78,7 @@ export const products: ProductInfo[] = [
     name: "adidas Team Base Top langarm",
     priceChildren: 10.00,
     priceAdults: 13.00,
-    sizes: ["116", "128", "140", "152", "164", "176","XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   },
   {
     id: "tiro24-allwetterjacke",
@@ -86,7 +88,17 @@ export const products: ProductInfo[] = [
     name: "adidas Tiro 24 Competition Allwetterjacke",
     priceChildren: 47.00,
     priceAdults: 52.00,
-    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL"],
+    sizes: ["116", "128", "140", "152", "164", "176", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+  },
+  {
+    id: "teambag-45l",
+    imageUrl:
+      "https://www.11teamsports.com/cdn-cgi/image/format=auto,width=350/media/bf/15/92/1730290939/adidas-jugend-tiro-competition-duffle-bag-gr--m-schwarz-f77e2f898f4641f1a23669836254a289-front.png",
+    imageAlt: "adidas Tiro Competition Duffle Bag 45 Liter",
+    name: "adidas Tiro Competition Sporttasche",
+    price: 35.00,
+    sizes: ["M (45 Liter)"],
+    hasUniformSizing: true
   },
   // Hier können weitere Produkte hinzugefügt werden
 ]

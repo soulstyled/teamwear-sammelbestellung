@@ -21,4 +21,5 @@ Deployed on Vercel: tus-teamwearbestellung.vercel.app
 
 ## ToDo: 
 - Preis-Kalkulation
-- Hinzufügen Sporttasche
+- Herren Artikel dazu
+- Test für Mail schreiben
