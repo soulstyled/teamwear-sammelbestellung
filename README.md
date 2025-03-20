@@ -20,5 +20,5 @@ npm run start
 Deployed on Vercel: tus-teamwearbestellung.vercel.app
 
 ## ToDo: 
-- Hinzufügen aller Produktdaten
 - Preis-Kalkulation
+- Hinzufügen Sporttasche
